@@ -21,10 +21,10 @@
 
     /* ===== カラー変数 ===== */
     :root {
-      --primary:   #3d7fc1;   /* ペンギンブルー */
-      --accent:    #f4a94e;   /* 温かいオレンジ */
-      --soft:      #eef4fb;   /* 薄ブルー背景 */
-      --warm:      #fff8f0;   /* 温かいクリーム */
+      --primary:   #3d7fc1;
+      --accent:    #f4a94e;
+      --soft:      #eef4fb;
+      --warm:      #fff8f0;
       --text:      #333;
       --muted:     #888;
       --border:    #e0e0e0;
@@ -77,18 +77,6 @@
       border-radius: 16px;
       box-shadow: 0 8px 40px rgba(61,127,193,0.15);
     }
-    .hero-badge {
-      display: inline-block;
-      background: var(--primary); color: #fff;
-      font-size: 12px; font-weight: 700; letter-spacing: 1px;
-      padding: 4px 14px; border-radius: 20px; margin-bottom: 16px;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 48px);
-      font-weight: 900; color: var(--primary);
-      line-height: 1.2; margin-bottom: 12px;
-    }
-    .hero p { font-size: 16px; color: #555; margin-bottom: 32px; }
     .btn-primary {
       display: inline-block;
       background: var(--accent); color: #fff;
@@ -150,14 +138,46 @@
       overflow: hidden;
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
       transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
     }
     .vendor-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
     }
-    .vendor-card img {
-      width: 100%; height: 200px; object-fit: cover;
+
+    /* ── カード内スライダー ── */
+    .vendor-slider {
+      position: relative; width: 100%; height: 200px; overflow: hidden;
     }
+    .vendor-slider .slides {
+      display: flex; height: 100%; transition: transform 0.3s ease;
+    }
+    .vendor-slider img {
+      width: 100%; height: 200px; object-fit: cover; flex-shrink: 0;
+    }
+    .slider-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.45); color: #fff;
+      border: none; border-radius: 50%;
+      width: 30px; height: 30px; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 2;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .vendor-slider:hover .slider-btn { opacity: 1; }
+    .slider-btn.prev { left: 7px; }
+    .slider-btn.next { right: 7px; }
+    .slider-dots {
+      position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px;
+    }
+    .slider-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.5); transition: background 0.2s;
+      cursor: pointer;
+    }
+    .slider-dot.active { background: #fff; }
+
     .vendor-card .vendor-body { padding: 16px; }
     .vendor-tag {
       display: inline-block;
@@ -172,12 +192,12 @@
 
     .vendor-card h3 { font-size: 16px; font-weight: 800; margin-bottom: 2px; }
     .vendor-card .vendor-name { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-    .vendor-card p { font-size: 13px; color: #555; margin-bottom: 12px; }
-    .vendor-card a.ig-link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 12px; color: var(--primary); font-weight: 600;
+    .vendor-card .vendor-desc { font-size: 13px; color: #555; margin-bottom: 10px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
-    .vendor-card a.ig-link:hover { text-decoration: underline; }
+    .vendor-card .open-hint {
+      font-size: 11px; color: #aaa; text-align: right; margin-top: 4px;
+    }
 
     /* ── 募集中カード ── */
     .vendor-card-empty {
@@ -197,23 +217,82 @@
     }
     .vendor-card-empty p { font-size: 13px; margin-top: 6px; }
 
+    /* ===== モーダル ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(0,0,0,0.62);
+      align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 20px;
+      max-width: 620px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+      position: relative;
+      animation: modalIn 0.22s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.94) translateY(12px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 14px;
+      background: rgba(0,0,0,0.12); border: none; border-radius: 50%;
+      width: 34px; height: 34px; font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10; color: #333;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(0,0,0,0.22); }
+
+    /* モーダル内スライダー */
+    .modal-slider {
+      position: relative; width: 100%; height: 320px; overflow: hidden;
+      border-radius: 20px 20px 0 0;
+    }
+    .modal-slider .slides {
+      display: flex; height: 100%; transition: transform 0.3s ease;
+    }
+    .modal-slider img {
+      width: 100%; height: 320px; object-fit: cover; flex-shrink: 0;
+    }
+    .modal-slider .slider-btn {
+      opacity: 1; width: 36px; height: 36px; font-size: 18px;
+    }
+    .modal-slider .slider-dots { bottom: 12px; }
+    .modal-slider .slider-dot { width: 8px; height: 8px; }
+
+    .modal-body { padding: 24px 28px 32px; }
+    .modal-body .vendor-tag { margin-bottom: 12px; }
+    .modal-body h2 { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+    .modal-body .modal-name { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+    .modal-body .modal-desc {
+      font-size: 14px; color: #444; line-height: 1.85; margin-bottom: 22px;
+    }
+    .modal-body .ig-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; color: var(--primary); font-weight: 700;
+      padding: 10px 22px; border: 2px solid var(--primary);
+      border-radius: 30px; transition: background 0.2s, color 0.2s;
+    }
+    .modal-body .ig-btn:hover { background: var(--primary); color: #fff; }
+
     /* ===== スケジュール ===== */
     #schedule { background: #fff; }
     .schedule-list { max-width: 480px; margin: 0 auto; }
     .schedule-item {
       display: flex; gap: 20px; align-items: flex-start;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
+      padding: 16px 0; border-bottom: 1px solid var(--border);
     }
     .schedule-item:last-child { border-bottom: none; }
     .schedule-time {
       font-size: 13px; color: var(--muted);
-      white-space: nowrap; min-width: 120px;
-      font-weight: 600;
+      white-space: nowrap; min-width: 120px; font-weight: 600;
     }
-    .schedule-label {
-      font-size: 15px; font-weight: 700; color: var(--text);
-    }
+    .schedule-label { font-size: 15px; font-weight: 700; color: var(--text); }
 
     /* ===== 申込（満員御礼） ===== */
     #apply { background: var(--warm); }
@@ -225,14 +304,11 @@
       box-shadow: 0 8px 32px rgba(224,85,85,0.12);
     }
     .manen-stamp {
-      display: inline-block;
       border: 4px solid #e05555; border-radius: 50%;
       color: #e05555; font-size: 28px; font-weight: 900;
       width: 120px; height: 120px;
-      line-height: 1.2;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 24px;
-      transform: rotate(-15deg);
+      margin: 0 auto 24px; transform: rotate(-15deg); line-height: 1.2;
     }
     .manen-box h3 { font-size: 22px; font-weight: 900; color: #333; margin-bottom: 12px; }
     .manen-box p { font-size: 14px; color: #666; }
@@ -249,24 +325,20 @@
     .access-map {
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      aspect-ratio: 4/3;
-      background: #e0e0e0;
+      aspect-ratio: 4/3; background: #e0e0e0;
     }
     .access-map iframe { width: 100%; height: 100%; border: 0; }
 
     /* ===== フッター ===== */
     footer {
       background: var(--primary); color: #fff;
-      padding: 40px 24px;
-      text-align: center;
+      padding: 40px 24px; text-align: center;
     }
     .footer-inner { max-width: 960px; margin: 0 auto; }
     .footer-logo { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
     .footer-sub { font-size: 13px; opacity: 0.7; margin-bottom: 20px; }
     .footer-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .footer-links a {
-      font-size: 13px; opacity: 0.8; transition: opacity 0.2s;
-    }
+    .footer-links a { font-size: 13px; opacity: 0.8; transition: opacity 0.2s; }
     .footer-links a:hover { opacity: 1; }
     .footer-copy { font-size: 12px; opacity: 0.5; }
 
@@ -276,6 +348,9 @@
       .access-inner { grid-template-columns: 1fr; }
       .hero { padding: 40px 16px; }
       section { padding: 56px 16px; }
+      .modal-body { padding: 18px 18px 24px; }
+      .modal-slider { height: 220px; }
+      .modal-slider img { height: 220px; }
     }
   </style>
 </head>
@@ -300,7 +375,7 @@
 
 <!-- ヒーロー -->
 <section class="hero">
-  <img src="images/hero.jpg" alt="第14回ペンギンマルシェ｜約2年振りに帰ってくる！！2026.7.26 SUN" style="border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,0.15);max-width:100%;margin:0 auto 32px;" />
+  <img src="images/ペンギン.jpg" alt="第14回ペンギンマルシェ｜約2年振りに帰ってくる！！2026.7.26 SUN" />
   <a href="#participants" class="btn-primary">🐧 出店者を見る →</a>
 </section>
 
@@ -330,49 +405,60 @@
     <p class="section-lead">第14回 出店者さんをご紹介します（随時更新）</p>
     <div class="participants-grid">
 
-      <!-- ======================================
-           出店者カード（確定）
-           以下のブロックをコピー＆ペーストして追加
-           ====================================== -->
+      <!-- ======================================================
+           ▼ 出店者カード サンプル（情報が届いたら追加）
 
-      <!-- ======================================
-           出店者カードはここに追加（情報提供次第更新）
-           ====================================== -->
+           ・images: 配列で複数画像を指定（1枚でもOK）
+           ・tag クラス: tag-handmade / tag-session / tag-workshop / tag-food
+           ・ig: InstagramのURL（なければ "" にする）
+
+      <div class="vendor-card"
+        data-images='["images/vendors/aaa_01.jpg","images/vendors/aaa_02.jpg"]'
+        data-tag="Handmade"
+        data-tag-class="tag-handmade"
+        data-name="出店者氏名・屋号"
+        data-desc="商品やサービスの説明文をここに書きます。複数行もOKです。"
+        data-ig="https://www.instagram.com/xxxxxxxx/">
+      </div>
+           ▲ サンプルここまで
+           ====================================================== -->
+
+      <!-- 出店者カードはここに追加（情報提供次第更新） -->
       <div class="vendor-card-empty">
         <span class="empty-tag">Handmade</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Workshop</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Food</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Session</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Handmade</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Workshop</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Handmade</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Food</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Session</span>
-        <p>出店者募集中</p>
+        <p>出店者情報 更新予定</p>
       </div>
 
     </div>
@@ -461,6 +547,164 @@
     <div class="footer-copy">© 2026 ペンギンマルシェ All Rights Reserved.</div>
   </div>
 </footer>
+
+<!-- モーダル -->
+<div class="modal-overlay" id="vendorModal">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-slider" id="modalSlider">
+      <div class="slides" id="modalSlides"></div>
+      <button class="slider-btn prev" id="mPrev">&#8249;</button>
+      <button class="slider-btn next" id="mNext">&#8250;</button>
+      <div class="slider-dots" id="mDots"></div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* =============================================
+   出店者カード生成 & スライダー & モーダル
+   ============================================= */
+
+/* ----- カード初期化 ----- */
+document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
+  const images  = JSON.parse(card.dataset.images || '[]');
+  const tag     = card.dataset.tag     || '';
+  const tagCls  = card.dataset.tagClass || '';
+  const name    = card.dataset.name    || '';
+  const desc    = card.dataset.desc    || '';
+
+  /* スライダー部分 */
+  const sliderHTML = buildSlider(images, 'vendor');
+
+  /* カード本体 */
+  card.innerHTML = `
+    ${sliderHTML}
+    <div class="vendor-body">
+      <span class="vendor-tag ${tagCls}">${tag}</span>
+      <h3>${name}</h3>
+      <p class="vendor-desc">${desc}</p>
+      <p class="open-hint">タップで詳細を見る →</p>
+    </div>
+  `;
+
+  /* カード内スライダー初期化 */
+  initSlider(card.querySelector('.vendor-slider'));
+
+  /* カードクリック → モーダル */
+  card.addEventListener('click', () => openModal(card));
+});
+
+/* ----- スライダーHTML生成 ----- */
+function buildSlider(images, type) {
+  if (!images.length) return '';
+  const imgs = images.map(src =>
+    `<img src="${src}" alt="" loading="lazy">`
+  ).join('');
+  const dots = images.length > 1
+    ? `<div class="slider-dots">${images.map((_,i) =>
+        `<span class="slider-dot${i===0?' active':''}" data-i="${i}"></span>`
+      ).join('')}</div>` : '';
+  const btns = images.length > 1
+    ? `<button class="slider-btn prev">&#8249;</button>
+       <button class="slider-btn next">&#8250;</button>` : '';
+  return `<div class="vendor-slider">
+    <div class="slides">${imgs}</div>
+    ${btns}${dots}
+  </div>`;
+}
+
+/* ----- スライダー動作 ----- */
+function initSlider(slider) {
+  if (!slider) return;
+  const slides = slider.querySelector('.slides');
+  const dots   = slider.querySelectorAll('.slider-dot');
+  const imgCount = slider.querySelectorAll('img').length;
+  if (imgCount <= 1) return;
+
+  let cur = 0;
+  const go = (n) => {
+    cur = (n + imgCount) % imgCount;
+    slides.style.transform = `translateX(-${cur * 100}%)`;
+    dots.forEach((d,i) => d.classList.toggle('active', i === cur));
+  };
+
+  slider.querySelector('.prev')?.addEventListener('click', e => { e.stopPropagation(); go(cur - 1); });
+  slider.querySelector('.next')?.addEventListener('click', e => { e.stopPropagation(); go(cur + 1); });
+  dots.forEach(d => d.addEventListener('click', e => { e.stopPropagation(); go(+d.dataset.i); }));
+}
+
+/* ----- モーダル ----- */
+const overlay    = document.getElementById('vendorModal');
+const modalSlides = document.getElementById('modalSlides');
+const mDots      = document.getElementById('mDots');
+const mPrev      = document.getElementById('mPrev');
+const mNext      = document.getElementById('mNext');
+const modalBody  = document.getElementById('modalBody');
+const modalSlider = document.getElementById('modalSlider');
+
+let mCur = 0, mCount = 0;
+
+function openModal(card) {
+  const images = JSON.parse(card.dataset.images || '[]');
+  const tag    = card.dataset.tag     || '';
+  const tagCls = card.dataset.tagClass || '';
+  const name   = card.dataset.name    || '';
+  const desc   = card.dataset.desc    || '';
+  const ig     = card.dataset.ig      || '';
+
+  mCount = images.length;
+  mCur   = 0;
+
+  /* スライダー */
+  modalSlides.innerHTML = images.map(src =>
+    `<img src="${src}" alt="${name}" loading="lazy">`
+  ).join('');
+  mDots.innerHTML = images.length > 1
+    ? images.map((_,i) =>
+        `<span class="slider-dot${i===0?' active':''}" data-i="${i}"></span>`
+      ).join('') : '';
+  mPrev.style.display = images.length > 1 ? 'flex' : 'none';
+  mNext.style.display = images.length > 1 ? 'flex' : 'none';
+  modalSlider.style.display = images.length ? 'block' : 'none';
+
+  mDots.querySelectorAll('.slider-dot').forEach(d =>
+    d.addEventListener('click', () => goModal(+d.dataset.i))
+  );
+
+  /* 本文 */
+  modalBody.innerHTML = `
+    <span class="vendor-tag ${tagCls}">${tag}</span>
+    <h2>${name}</h2>
+    ${ig ? `<p class="modal-name"><a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a></p>` : ''}
+    <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
+  `;
+
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function goModal(n) {
+  mCur = (n + mCount) % mCount;
+  modalSlides.style.transform = `translateX(-${mCur * 100}%)`;
+  mDots.querySelectorAll('.slider-dot').forEach((d,i) =>
+    d.classList.toggle('active', i === mCur)
+  );
+}
+
+mPrev.addEventListener('click', () => goModal(mCur - 1));
+mNext.addEventListener('click', () => goModal(mCur + 1));
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
 
 </body>
 </html>
