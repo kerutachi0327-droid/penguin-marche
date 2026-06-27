@@ -351,6 +351,32 @@
       .modal-body { padding: 18px 18px 24px; }
       .modal-slider { height: 220px; }
       .modal-slider img { height: 220px; }
+
+      /* About カード：モバイルは2列 */
+      .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .about-card {
+        padding: 20px 12px;
+      }
+      .about-card img {
+        width: 60px !important;
+        height: 60px !important;
+      }
+      .about-card h3 { font-size: 13px; }
+
+      /* 出店者カード：1列 */
+      .participants-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* ヒーロー画像 */
+      .hero img { border-radius: 10px; }
+
+      /* セクションタイトル */
+      .section-title { font-size: 20px; }
+      .section-lead { font-size: 13px; margin-bottom: 32px; }
     }
   </style>
 </head>
