@@ -138,7 +138,7 @@
     /* ── 確定出店者カード ── */
     .vendor-card {
       background: #fff; border-radius: 14px;
-      overflow: hidden;
+      overflow: visible;
       box-shadow: 0 2px 12px rgba(0,0,0,0.07);
       transition: transform 0.2s, box-shadow 0.2s;
       cursor: pointer;
@@ -150,7 +150,22 @@
 
     /* ── カード内スライダー ── */
     .vendor-slider {
-      position: relative; width: 100%; aspect-ratio: 4/5; overflow: hidden;
+      position: relative; width: 100%; aspect-ratio: 4/5;
+      overflow: hidden; border-radius: 14px 14px 0 0;
+    }
+
+    /* ── カードアイコンバッジ（スライダー下端に重ねる） ── */
+    .vendor-icon-badge {
+      position: relative; z-index: 3;
+      margin-top: -24px; margin-left: 14px;
+      width: 48px; height: 48px;
+    }
+    .vendor-icon-badge img {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      display: block;
     }
     .vendor-slider .slides {
       display: flex; height: 100%; transition: transform 0.3s ease;
@@ -269,9 +284,17 @@
     .modal-slider .slider-dot { width: 8px; height: 8px; }
 
     .modal-body { padding: 24px 28px 32px; }
-    .modal-body .vendor-tag { margin-bottom: 12px; }
-    .modal-body h2 { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
-    .modal-body .modal-name { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+    /* アイコン＋名前を横並び（重なりなし） */
+    .modal-header-row {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+    }
+    .modal-header-icon {
+      width: 68px; height: 68px; border-radius: 50%; flex-shrink: 0;
+      object-fit: cover; border: 3px solid #eef4fb;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .modal-header-text .vendor-tag { margin-bottom: 6px; display: block; }
+    .modal-header-text h2 { font-size: 20px; font-weight: 900; margin: 0; }
     .modal-body .modal-desc {
       font-size: 14px; color: #444; line-height: 1.85; margin-bottom: 22px;
     }
@@ -617,10 +640,15 @@ document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
   /* スライダー部分 */
   const sliderHTML = buildSlider(images, 'vendor');
 
+  const icon = card.dataset.icon || '';
+  const iconBadge = icon
+    ? `<div class="vendor-icon-badge"><img src="${icon}" alt="${name}のアイコン"></div>` : '';
+
   /* カード本体 */
   card.innerHTML = `
     ${sliderHTML}
-    <div class="vendor-body">
+    ${iconBadge}
+    <div class="vendor-body" style="${icon ? 'padding-top:10px;' : ''}">
       <span class="vendor-tag ${tagCls}">${tag}</span>
       <h3>${name}</h3>
       ${igId ? `<p class="vendor-name">@${igId}</p>` : ''}
@@ -715,15 +743,19 @@ function openModal(card) {
     d.addEventListener('click', () => goModal(+d.dataset.i))
   );
 
-  /* 本文 */
+  /* 本文（アイコン＋タグ＋名前を横並び・重なりなし） */
+  const iconHtml = icon
+    ? `<img src="${icon}" alt="${name}" class="modal-header-icon">` : '';
   modalBody.innerHTML = `
-    <div style="position:relative;">
-      <span class="vendor-tag ${tagCls}">${tag}</span>
-      ${icon ? `<img src="${icon}" alt="${name}" style="position:absolute;top:5px;right:110px;width:160px;height:160px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,0.18);">` : ''}
+    <div class="modal-header-row">
+      ${iconHtml}
+      <div class="modal-header-text">
+        <span class="vendor-tag ${tagCls}">${tag}</span>
+        <h2>${name}</h2>
+      </div>
     </div>
-    <h2 style="margin-top:12px;">${name}</h2>
-    ${ig ? `<p class="modal-name"><a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a>${igId ? `<span style="display:block;margin-top:6px;font-size:13px;color:#888;">@${igId}</span>` : ''}</p>` : ''}
     <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
+    ${ig ? `<a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a>${igId ? `<span style="display:block;margin-top:8px;font-size:13px;color:#888;">@${igId}</span>` : ''}` : ''}
   `;
 
   overlay.classList.add('open');
