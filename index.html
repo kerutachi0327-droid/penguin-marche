@@ -453,12 +453,15 @@
 
       <!-- 出店者カードはここに追加（情報提供次第更新） -->
       <div class="vendor-card"
-        data-images='["images/food2.png","images/hand.png","images/session.png","images/work.png"]'
+        data-images='["images/田邊由美子/LINE_NOTE_260628_1.jpg","images/田邊由美子/LINE_NOTE_260628_2.jpg","images/田邊由美子/LINE_NOTE_260628_3.jpg","images/田邊由美子/LINE_NOTE_260628_4.jpg","images/田邊由美子/LINE_NOTE_260628_5.jpg","images/田邊由美子/LINE_NOTE_260628_6.jpg","images/田邊由美子/LINE_NOTE_260628_7.jpg","images/田邊由美子/LINE_NOTE_260628_8.jpg","images/田邊由美子/LINE_NOTE_260628_9.jpg"]'
         data-tag="Handmade"
         data-tag-class="tag-handmade"
-        data-name="サンプル出店者（画像4枚テスト）"
-        data-desc="← → でスライド、カード押下でポップアップ表示のサンプルです。"
-        data-ig="https://www.instagram.com/penguin_marche/">
+        data-name="田邉由美子"
+        data-shop="ユミテラスのお店"
+        data-catch="安心と心地よさを自分にプレゼント"
+        data-desc="身体を温め、ゆるめ、安心へ。布ライナー「胞衣（えな）」は、胎児を包む羊膜を語源にもつ、女性が本来の安心と神聖さを思い出すための布。綿100%の宝布ふきんで拭き掃除をすれば、空間が愛で満ちていく。管理栄養士「ちえりん」が神のエネルギーを込めたスノーボールクッキー＆エネルギーボール、iPadで楽しむデジタルアート体験も。あなたの細胞が喜ぶ、やさしいひとときをどうぞ。"
+        data-ig="https://www.instagram.com/yumi.chie3"
+        data-ig-id="yumi.chie3">
       </div>
 
       <div class="vendor-card-empty">
@@ -503,26 +506,20 @@
 </section>
 
 <!-- スケジュール -->
-<section id="schedule">
+<section id="schedule" style="background: linear-gradient(135deg, #deeeff 0%, #fff6ed 100%); padding: 80px 24px;">
   <div class="section-inner">
     <h2 class="section-title">当日<em>スケジュール</em></h2>
     <p class="section-lead">2026年7月26日（日）</p>
-    <div class="schedule-list">
-      <div class="schedule-item">
-        <span class="schedule-time">09:30〜11:00</span>
-        <span class="schedule-label">出店準備</span>
-      </div>
-      <div class="schedule-item">
-        <span class="schedule-time">11:00〜17:30</span>
-        <span class="schedule-label">🐧 マルシェ開催（入場無料）</span>
-      </div>
-      <div class="schedule-item">
-        <span class="schedule-time">17:30〜19:00</span>
-        <span class="schedule-label">片付け</span>
-      </div>
-      <div class="schedule-item">
-        <span class="schedule-time">19:00〜21:00</span>
-        <span class="schedule-label">🥂 打上げ（任意参加）</span>
+    <div style="max-width:560px; margin:0 auto;">
+      <div style="background:#fff; border-radius:32px; padding:52px 40px; box-shadow:0 8px 48px rgba(61,127,193,0.12); text-align:center;">
+        <div style="font-size:clamp(13px,2.5vw,17px); color:#aaa; font-weight:600; letter-spacing:3px; margin-bottom:24px;">SCHEDULE</div>
+        <div style="display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap;">
+          <span style="font-size:clamp(36px,8vw,72px); font-weight:900; color:#3d7fc1; letter-spacing:2px; line-height:1;">11:00〜17:30</span>
+        </div>
+        <div style="margin-top:24px; font-size:clamp(18px,4vw,28px); color:#555; font-weight:700; letter-spacing:1px;">
+          🐧 マルシェ開催
+        </div>
+        <div style="margin-top:16px; display:inline-block; background:#fff0e0; border-radius:999px; padding:10px 36px; font-size:clamp(15px,3vw,20px); font-weight:700; color:#e07a30; letter-spacing:1px;">入場無料</div>
       </div>
     </div>
   </div>
@@ -575,7 +572,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">🐧 ペンギンマルシェ</div>
-    <div class="footer-sub">主催：小野留美（ペンギン）</div>
+    <div class="footer-sub">主催：小野留美（ぺんぎん）</div>
     <div class="footer-links">
       <a href="https://www.instagram.com/penguin_marche/" target="_blank" rel="noopener">📷 Instagram</a>
       <a href="#participants">出店者紹介</a>
@@ -690,6 +687,7 @@ function openModal(card) {
   const name   = card.dataset.name    || '';
   const desc   = card.dataset.desc    || '';
   const ig     = card.dataset.ig      || '';
+  const igId   = card.dataset.igId    || '';
 
   mCount = images.length;
   mCur   = 0;
@@ -714,7 +712,7 @@ function openModal(card) {
   modalBody.innerHTML = `
     <span class="vendor-tag ${tagCls}">${tag}</span>
     <h2>${name}</h2>
-    ${ig ? `<p class="modal-name"><a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a></p>` : ''}
+    ${ig ? `<p class="modal-name"><a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a>${igId ? `<span style="display:block;margin-top:6px;font-size:13px;color:#888;">@${igId}</span>` : ''}</p>` : ''}
     <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
   `;
 

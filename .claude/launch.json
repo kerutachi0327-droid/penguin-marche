@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "penguin-marche",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd '/Users/macbookpro_ko/Documents/Claude/Projects/【ペンギン】プロジェクト' && python3 -m http.server 8765"],
+      "port": 8765
+    }
+  ]
+}
