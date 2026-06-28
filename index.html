@@ -186,7 +186,7 @@
     .slider-btn.prev { left: 7px; }
     .slider-btn.next { right: 7px; }
     .slider-dots {
-      position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 5px;
     }
     .slider-dot {
@@ -493,7 +493,8 @@
         data-catch="丹田乗馬ツアー"
         data-desc="動物達と日常を謳歌する牧場を作りたい。元競走馬厩務員🐎、時々アイドル💓。身体を開く丹田乗馬ツアー🐴。この身体の使い方さえわかれば、日常に持ち帰って全てに応用できます❣️ 体験された方々から、想像以上の感動のコメントをたくさん頂いております😭 当日は無料体験もできますので、ぜひお越しくださいませ✨🐴"
         data-ig="https://www.instagram.com/yukiko_s_world"
-        data-ig-id="yukiko_s_world">
+        data-ig-id="yukiko_s_world"
+        data-icon="images/丸岡由貴子/icon.png">
       </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Workshop</span>
@@ -648,7 +649,7 @@ document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
   card.innerHTML = `
     ${sliderHTML}
     ${iconBadge}
-    <div class="vendor-body" style="${icon ? 'padding-top:10px;' : ''}">
+    <div class="vendor-body" style="${icon ? 'padding-top:6px;' : ''}">
       <span class="vendor-tag ${tagCls}">${tag}</span>
       <h3>${name}</h3>
       ${igId ? `<p class="vendor-name">@${igId}</p>` : ''}
