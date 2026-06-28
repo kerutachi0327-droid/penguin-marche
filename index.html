@@ -120,12 +120,12 @@
     }
     .about-card {
       background: #fff; border-radius: 12px;
-      padding: 28px 20px; text-align: center;
+      overflow: hidden; text-align: center;
       border: 1px solid var(--border);
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     .about-card .icon { font-size: 36px; margin-bottom: 10px; }
-    .about-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); }
+    .about-card h3 { font-size: 15px; font-weight: 700; color: var(--primary); padding: 12px 8px; }
 
     /* ===== 出店者カード ===== */
     #participants { background: var(--soft); }
@@ -359,13 +359,8 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
       }
-      .about-card {
-        padding: 20px 12px;
-      }
-      .about-card img {
-        width: 60px !important;
-        height: 60px !important;
-      }
+      .about-card { padding: 0; }
+      .about-card img { width: 100% !important; height: auto !important; }
       .about-card h3 { font-size: 13px; }
 
       /* 出店者カード：1列 */
@@ -418,10 +413,10 @@
       <strong>初めて出店する方も大歓迎！🎉</strong>
     </p>
     <div class="about-grid">
-      <div class="about-card"><img src="images/sample_handmade.png" alt="Handmade" style="width:80px;height:80px;object-fit:contain;margin:0 auto 10px;"><h3>Handmade</h3></div>
-      <div class="about-card"><img src="images/sample_session.png" alt="Session" style="width:80px;height:80px;object-fit:contain;margin:0 auto 10px;"><h3>Session</h3></div>
-      <div class="about-card"><img src="images/sample_workshop.png" alt="Workshop" style="width:80px;height:80px;object-fit:contain;margin:0 auto 10px;"><h3>Workshop</h3></div>
-      <div class="about-card"><img src="images/sample_food.png" alt="Food" style="width:80px;height:80px;object-fit:contain;margin:0 auto 10px;"><h3>Food</h3></div>
+      <div class="about-card"><img src="images/about_handmade.jpg" alt="Handmade" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Handmade</h3></div>
+      <div class="about-card"><img src="images/about_session.jpg" alt="Session" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Session</h3></div>
+      <div class="about-card"><img src="images/about_workshop.jpg" alt="Workshop" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Workshop</h3></div>
+      <div class="about-card"><img src="images/about_food.jpg" alt="Food" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Food</h3></div>
     </div>
   </div>
 </section>
@@ -461,7 +456,8 @@
         data-catch="安心と心地よさを自分にプレゼント"
         data-desc="身体を温め、ゆるめ、安心へ。布ライナー「胞衣（えな）」は、胎児を包む羊膜を語源にもつ、女性が本来の安心と神聖さを思い出すための布。綿100%の宝布ふきんで拭き掃除をすれば、空間が愛で満ちていく。管理栄養士「ちえりん」が神のエネルギーを込めたスノーボールクッキー＆エネルギーボール、iPadで楽しむデジタルアート体験も。あなたの細胞が喜ぶ、やさしいひとときをどうぞ。"
         data-ig="https://www.instagram.com/yumi.chie3"
-        data-ig-id="yumi.chie3">
+        data-ig-id="yumi.chie3"
+        data-icon="images/田邊由美子/icon.png">
       </div>
 
       <div class="vendor-card-empty">
@@ -608,6 +604,7 @@ document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
   const tagCls  = card.dataset.tagClass || '';
   const name    = card.dataset.name    || '';
   const desc    = card.dataset.desc    || '';
+  const igId    = card.dataset.igId    || '';
 
   /* スライダー部分 */
   const sliderHTML = buildSlider(images, 'vendor');
@@ -618,6 +615,7 @@ document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
     <div class="vendor-body">
       <span class="vendor-tag ${tagCls}">${tag}</span>
       <h3>${name}</h3>
+      ${igId ? `<p class="vendor-name">@${igId}</p>` : ''}
       <p class="vendor-desc">${desc}</p>
       <p class="open-hint">タップで詳細を見る →</p>
     </div>
@@ -688,6 +686,7 @@ function openModal(card) {
   const desc   = card.dataset.desc    || '';
   const ig     = card.dataset.ig      || '';
   const igId   = card.dataset.igId    || '';
+  const icon   = card.dataset.icon    || '';
 
   mCount = images.length;
   mCur   = 0;
@@ -710,8 +709,11 @@ function openModal(card) {
 
   /* 本文 */
   modalBody.innerHTML = `
-    <span class="vendor-tag ${tagCls}">${tag}</span>
-    <h2>${name}</h2>
+    <div style="position:relative;">
+      <span class="vendor-tag ${tagCls}">${tag}</span>
+      ${icon ? `<img src="${icon}" alt="${name}" style="position:absolute;top:5px;right:110px;width:160px;height:160px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,0.18);">` : ''}
+    </div>
+    <h2 style="margin-top:12px;">${name}</h2>
     ${ig ? `<p class="modal-name"><a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a>${igId ? `<span style="display:block;margin-top:6px;font-size:13px;color:#888;">@${igId}</span>` : ''}</p>` : ''}
     <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
   `;
