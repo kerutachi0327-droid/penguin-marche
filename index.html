@@ -613,7 +613,8 @@
         data-ig-id="mikiko_photo_lab"
         data-ig2="https://www.instagram.com/chiho_souzoubeya"
         data-ig-id2="chiho_souzoubeya"
-        data-ig-pending="miki.miki.qo_op"
+        data-ig3="https://www.instagram.com/mikikotaguchi.1101"
+        data-ig-id3="mikikotaguchi.1101"
         data-icon="images/MIKIKO/icon.png">
       </div>
       <div class="vendor-card"
@@ -870,6 +871,8 @@ function openModal(card) {
   const igId       = card.dataset.igId       || '';
   const ig2        = card.dataset.ig2        || '';
   const igId2      = card.dataset.igId2      || '';
+  const ig3        = card.dataset.ig3        || '';
+  const igId3      = card.dataset.igId3      || '';
   const igPending  = card.dataset.igPending  || '';
   const igInactive = card.dataset.igInactive === 'true';
   const icon       = card.dataset.icon       || '';
@@ -914,6 +917,7 @@ function openModal(card) {
         ? `<span class="ig-btn-inactive">📷 @${igId2}</span>`
         : `<a href="${ig2}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId2 ? ` @${igId2}` : ''}</a>`
       : ''}
+      ${ig3 ? `<a href="${ig3}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId3 ? ` @${igId3}` : ''}</a>` : ''}
       ${igPending ? `<span class="ig-btn-inactive">📷 @${igPending}</span>` : ''}
     </div>
   `;
