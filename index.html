@@ -355,6 +355,48 @@
     }
     .access-map iframe { width: 100%; height: 100%; border: 0; }
 
+    /* ===== 会場セクション ===== */
+    #venue { background: linear-gradient(180deg, #eef6ff 0%, #fff 100%); }
+    .venue-videos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .venue-videos video {
+      width: 100%; border-radius: 18px;
+      aspect-ratio: 9/16; object-fit: cover;
+      display: block;
+    }
+    .venue-photo-hero {
+      width: 100%; display: block;
+      border-radius: 20px; object-fit: cover;
+      max-height: 500px; margin-bottom: 14px;
+    }
+    .venue-photos-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px; margin-bottom: 14px;
+    }
+    .venue-photos-2 img {
+      width: 100%; border-radius: 16px;
+      aspect-ratio: 4/3; object-fit: cover; display: block;
+    }
+    .venue-photos-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .venue-photos-4 img {
+      width: 100%; border-radius: 12px;
+      aspect-ratio: 1/1; object-fit: cover; display: block;
+    }
+    @media (max-width: 640px) {
+      .venue-videos { grid-template-columns: repeat(3, 70vw); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+      .venue-videos video { scroll-snap-align: start; border-radius: 14px; }
+      .venue-photos-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ===== フッター ===== */
     footer {
       background: var(--primary); color: #fff;
@@ -441,6 +483,40 @@
       <div class="about-card"><img src="images/sample_session.png" alt="Session" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Session</h3></div>
       <div class="about-card"><img src="images/sample_workshop.png" alt="Workshop" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Workshop</h3></div>
       <div class="about-card"><img src="images/sample_food.png" alt="Food" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block;"><h3>Food</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- 会場の雰囲気 -->
+<section id="venue">
+  <div class="section-inner">
+    <h2 class="section-title">会場の<em>雰囲気</em></h2>
+    <p class="section-lead">足立区勤労福祉会館。当日の会場イメージをお届けします🏛️</p>
+
+    <!-- 動画 3本 -->
+    <div class="venue-videos">
+      <video src="会場/LINE_ALBUM_会場_260701_1.mp4" autoplay muted loop playsinline></video>
+      <video src="会場/LINE_ALBUM_会場_260701_2.mp4" autoplay muted loop playsinline></video>
+      <video src="会場/LINE_ALBUM_会場_260701_3.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <!-- 写真: 1枚大 -->
+    <img src="会場/LINE_ALBUM_会場_260701_1.jpg" class="venue-photo-hero" alt="会場の様子">
+
+    <!-- 写真: 2列×2 -->
+    <div class="venue-photos-2">
+      <img src="会場/LINE_ALBUM_会場_260701_2.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_3.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_4.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_5.jpg" alt="会場の様子">
+    </div>
+
+    <!-- 写真: 4列 -->
+    <div class="venue-photos-4">
+      <img src="会場/LINE_ALBUM_会場_260701_6.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_7.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_8.jpg" alt="会場の様子">
+      <img src="会場/LINE_ALBUM_会場_260701_9.jpg" alt="会場の様子">
     </div>
   </div>
 </section>
