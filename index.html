@@ -520,6 +520,20 @@
         data-ig-id="aki_bon0927"
         data-icon="images/三輪晃代/icon.png">
       </div>
+      <div class="vendor-card"
+        data-images='["images/きゃさりん/LINE_NOTE_260630_1.jpg","images/きゃさりん/LINE_NOTE_260630_2.jpg","images/きゃさりん/LINE_NOTE_260630_3.jpg","images/きゃさりん/LINE_NOTE_260630_4.jpg","images/きゃさりん/LINE_NOTE_260630_5.jpg","images/きゃさりん/LINE_NOTE_260630_6.jpg","images/きゃさりん/LINE_NOTE_260630_7.jpg","images/きゃさりん/LINE_NOTE_260630_8.jpg","images/きゃさりん/LINE_NOTE_260630_9.jpg","images/きゃさりん/LINE_NOTE_260630_10.jpg","images/きゃさりん/LINE_NOTE_260630_11.jpg","images/きゃさりん/LINE_NOTE_260630_12.jpg","images/きゃさりん/LINE_NOTE_260630_13.jpg","images/きゃさりん/LINE_NOTE_260630_14.jpg","images/きゃさりん/LINE_NOTE_260630_15.jpg","images/きゃさりん/LINE_NOTE_260630_16.jpg"]'
+        data-tag="Session"
+        data-tag-class="tag-session"
+        data-name="きゃさりん"
+        data-shop="salon de catherine"
+        data-catch="乙女心に、もう一度「ただいま」を"
+        data-desc="人生で一度は着てみたかったロリータドレス。「可愛いものが好き。」「でも、もう私の年齢では…。」そんな心の奥にしまい込んだ「好き」を、もう一度迎えにいく体験です。ロリータファッション歴25年のきゃさりんがドレス選びから着替え、記念撮影までトータルコーディネート。あなただけのプリンセスタイムをお楽しみください。【petitコース】1着＋スタイリング＋記念撮影 ¥3,000 【Metamorphoseコース】3着＋スタイリング＋記念撮影 ¥5,000"
+        data-ig="https://www.instagram.com/albino_catherine"
+        data-ig-id="albino_catherine"
+        data-ig2="https://www.instagram.com/salon_de_catherine_official"
+        data-ig-id2="salon_de_catherine_official"
+        data-icon="images/きゃさりん/icon.png">
+      </div>
       <div class="vendor-card-empty">
         <span class="empty-tag">Workshop</span>
         <p>出店者情報 更新予定</p>
@@ -756,6 +770,8 @@ function openModal(card) {
   const desc   = card.dataset.desc    || '';
   const ig     = card.dataset.ig      || '';
   const igId   = card.dataset.igId    || '';
+  const ig2    = card.dataset.ig2     || '';
+  const igId2  = card.dataset.igId2   || '';
   const icon   = card.dataset.icon    || '';
 
   mCount = images.length;
@@ -789,7 +805,10 @@ function openModal(card) {
       </div>
     </div>
     <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
-    ${ig ? `<a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram を見る</a>${igId ? `<span style="display:block;margin-top:8px;font-size:13px;color:#888;">@${igId}</span>` : ''}` : ''}
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${ig ? `<a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId ? ` @${igId}` : ''}</a>` : ''}
+      ${ig2 ? `<a href="${ig2}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId2 ? ` @${igId2}` : ''}</a>` : ''}
+    </div>
   `;
 
   overlay.classList.add('open');
