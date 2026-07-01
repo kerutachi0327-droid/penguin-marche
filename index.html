@@ -305,6 +305,17 @@
       border-radius: 30px; transition: background 0.2s, color 0.2s;
     }
     .modal-body .ig-btn:hover { background: var(--primary); color: #fff; }
+    .modal-body .ig-btn-inactive {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 14px; color: #bbb; font-weight: 700;
+      padding: 10px 22px; border: 2px solid #e0e0e0;
+      border-radius: 30px; cursor: not-allowed; opacity: 0.55;
+    }
+    .vendor-icon-white {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: #fff; border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
 
     /* ===== スケジュール ===== */
     #schedule { background: #fff; }
@@ -601,7 +612,9 @@
         data-ig="https://www.instagram.com/miki.miki.qo_op"
         data-ig-id="miki.miki.qo_op"
         data-ig2="https://www.instagram.com/mikiko_photo_labo"
-        data-ig-id2="mikiko_photo_labo">
+        data-ig-id2="mikiko_photo_labo"
+        data-ig-inactive="true"
+        data-icon-placeholder="true">
       </div>
       <div class="vendor-card"
         data-images='["images/azusa/LINE_NOTE_260701_1.jpg","images/azusa/LINE_NOTE_260701_4.jpg"]'
@@ -769,15 +782,19 @@ document.querySelectorAll('.vendor-card[data-images]').forEach(card => {
   /* スライダー部分 */
   const sliderHTML = buildSlider(images, 'vendor');
 
-  const icon = card.dataset.icon || '';
+  const icon            = card.dataset.icon            || '';
+  const iconPlaceholder = card.dataset.iconPlaceholder === 'true';
   const iconBadge = icon
-    ? `<div class="vendor-icon-badge"><img src="${icon}" alt="${name}のアイコン"></div>` : '';
+    ? `<div class="vendor-icon-badge"><img src="${icon}" alt="${name}のアイコン"></div>`
+    : iconPlaceholder
+    ? `<div class="vendor-icon-badge"><div class="vendor-icon-white"></div></div>`
+    : '';
 
   /* カード本体 */
   card.innerHTML = `
     ${sliderHTML}
     ${iconBadge}
-    <div class="vendor-body" style="${icon ? 'padding-top:6px;' : ''}">
+    <div class="vendor-body" style="${(icon || iconPlaceholder) ? 'padding-top:6px;' : ''}">
       <span class="vendor-tag ${tagCls}">${tag}</span>
       <h3>${name}</h3>
       ${igId ? `<p class="vendor-name">@${igId}</p>` : ''}
@@ -849,11 +866,12 @@ function openModal(card) {
   const tagCls = card.dataset.tagClass || '';
   const name   = card.dataset.name    || '';
   const desc   = card.dataset.desc    || '';
-  const ig     = card.dataset.ig      || '';
-  const igId   = card.dataset.igId    || '';
-  const ig2    = card.dataset.ig2     || '';
-  const igId2  = card.dataset.igId2   || '';
-  const icon   = card.dataset.icon    || '';
+  const ig         = card.dataset.ig         || '';
+  const igId       = card.dataset.igId       || '';
+  const ig2        = card.dataset.ig2        || '';
+  const igId2      = card.dataset.igId2      || '';
+  const igInactive = card.dataset.igInactive === 'true';
+  const icon       = card.dataset.icon       || '';
 
   mCount = images.length;
   mCur   = 0;
@@ -887,8 +905,14 @@ function openModal(card) {
     </div>
     <p class="modal-desc">${desc.replace(/\n/g,'<br>')}</p>
     <div style="display:flex;flex-direction:column;gap:10px;">
-      ${ig ? `<a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId ? ` @${igId}` : ''}</a>` : ''}
-      ${ig2 ? `<a href="${ig2}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId2 ? ` @${igId2}` : ''}</a>` : ''}
+      ${ig ? igInactive
+        ? `<span class="ig-btn-inactive">📷 @${igId}</span>`
+        : `<a href="${ig}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId ? ` @${igId}` : ''}</a>`
+      : ''}
+      ${ig2 ? igInactive
+        ? `<span class="ig-btn-inactive">📷 @${igId2}</span>`
+        : `<a href="${ig2}" target="_blank" rel="noopener" class="ig-btn">📷 Instagram${igId2 ? ` @${igId2}` : ''}</a>`
+      : ''}
     </div>
   `;
 
