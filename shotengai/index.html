@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>しあわせつながる商店街 | ペンギンマルシェ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2D7DD2;
+      --primary-light: #EAF4FF;
+      --accent: #F7B731;
+      --accent-dark: #E5A020;
+      --text: #333;
+      --text-muted: #666;
+      --bg: #FAFAFA;
+      --card-bg: #FFF;
+      --border: #E8E8E8;
+      --penguin-navy: #1A3A5C;
+      --penguin-teal: #2ABFBF;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: var(--penguin-navy);
+      color: #fff;
+      text-align: center;
+      padding: 24px 16px 20px;
+    }
+    .site-header .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .site-header .penguin-icon {
+      font-size: 2rem;
+    }
+    .site-header h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .site-header .subtitle {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, var(--penguin-navy) 0%, var(--primary) 50%, var(--penguin-teal) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 48px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content { position: relative; }
+    .hero h2 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      margin-bottom: 12px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .hero p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      max-width: 500px;
+      margin: 0 auto 24px;
+    }
+    .hero .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.8rem;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== NAV ===== */
+    .filter-nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .filter-nav .inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .filter-nav .label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .filter-btn {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      color: var(--text-muted);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 16px 64px;
+    }
+
+    .section-heading {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.3rem;
+      color: var(--penguin-navy);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary-light), transparent);
+      border-radius: 1px;
+    }
+
+    /* ===== SHOP GRID ===== */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .shop-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .shop-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px 12px;
+    }
+    .card-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary-light);
+      flex-shrink: 0;
+      background: var(--border);
+    }
+    .card-title-wrap { flex: 1; min-width: 0; }
+    .card-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--penguin-navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-category {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .marche-tags {
+      display: flex;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .marche-tag {
+      font-size: 0.65rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-weight: 500;
+    }
+
+    .card-desc {
+      padding: 0 16px 12px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-actions {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-ig {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: opacity 0.15s;
+    }
+    .btn-ig:hover { opacity: 0.85; }
+    .btn-ig2 {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #fff;
+      color: #bc1888;
+      border: 1.5px solid #bc1888;
+      text-decoration: none;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .btn-ig2:hover { background: #f9e8f9; }
+    .btn-online {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+    .btn-online:hover { background: var(--accent-dark); }
+
+    .no-result {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 48px 16px;
+      font-size: 0.95rem;
+    }
+
+    /* ===== INFO BAR ===== */
+    .info-bar {
+      background: var(--primary-light);
+      border: 1px solid #c5dff8;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      font-size: 0.85rem;
+      color: var(--primary);
+    }
+    .info-bar strong { font-weight: 700; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--penguin-navy);
+      color: rgba(255,255,255,0.65);
+      text-align: center;
+      padding: 32px 16px;
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+    footer a { color: rgba(255,255,255,0.8); }
+    footer .footer-title {
+      font-family: 'Noto Serif JP', serif;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    footer .disclaimer {
+      max-width: 600px;
+      margin: 16px auto 0;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .shop-grid { grid-template-columns: 1fr; }
+      .hero { padding: 32px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-wrap">
+    <span class="penguin-icon">🐧</span>
+    <h1>しあわせつながる商店街</h1>
+  </div>
+  <p class="subtitle">ペンギンマルシェ 出店者ページ</p>
+</header>
+
+<div class="hero">
+  <div class="hero-content">
+    <h2>人と人がつながる、あったかいオンライン商店街</h2>
+    <p>マルシェで出会った大切なお店たちが、ここに集まっています。<br>お気に入りのお店をフォローして、つながりを続けましょう。</p>
+    <div class="badge-row">
+      <span class="badge">🎪 第14回・第15回 出店者</span>
+      <span class="badge">🏪 全13店舗</span>
+      <span class="badge">✨ 随時更新</span>
+    </div>
+  </div>
+</div>
+
+<nav class="filter-nav">
+  <div class="inner">
+    <span class="label">絞り込み：</span>
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="vol15">第15回</button>
+    <button class="filter-btn" data-filter="vol14">第14回</button>
+    <button class="filter-btn" data-filter="session">セッション</button>
+    <button class="filter-btn" data-filter="handmade">ハンドメイド</button>
+    <button class="filter-btn" data-filter="food">フード</button>
+    <button class="filter-btn" data-filter="workshop">ワークショップ</button>
+  </div>
+</nav>
+
+<main>
+  <div class="info-bar">
+    <strong>📌 オンラインショップ情報について</strong>　各店舗のInstagramから最新情報・ご予約・お問い合わせをどうぞ。オンラインショップは準備中の店舗があります。
+  </div>
+
+  <h2 class="section-heading">🏪 お気に入りのお店に出会おう</h2>
+
+  <div class="shop-grid" id="shopGrid">
+    <!-- JSで動的生成 -->
+  </div>
+  <div class="no-result" id="noResult" style="display:none">該当するお店が見つかりませんでした。</div>
+</main>
+
+<footer>
+  <p class="footer-title">🐧 ペンギンマルシェ</p>
+  <p>ペンギンマルシェ公式サイト</p>
+  <div class="disclaimer">
+    <p>当ページに掲載の各店舗情報は出店者本人の提供情報をもとに作成しています。<br>
+    商品・サービス・価格は変更になる場合があります。最新情報は各店舗のInstagramにてご確認ください。<br>
+    当ページへの掲載は出店事実の記録であり、特定商品・サービスの推奨を意味するものではありません。</p>
+  </div>
+</footer>
+
+<script>
+  const CATEGORY_LABEL = {
+    session: 'セッション・体験',
+    handmade: 'ハンドメイド',
+    food: 'フード・ドリンク',
+    workshop: 'ワークショップ',
+    other: 'その他'
+  };
+
+  let allShops = [];
+  let currentFilter = 'all';
+
+  async function loadShops() {
+    try {
+      const res = await fetch('../data/shops.json');
+      const data = await res.json();
+      allShops = data.shops;
+      renderShops();
+    } catch (e) {
+      document.getElementById('shopGrid').innerHTML =
+        '<p style="color:#c00;padding:20px">データの読み込みに失敗しました。</p>';
+    }
+  }
+
+  function matchesFilter(shop) {
+    if (currentFilter === 'all') return true;
+    if (currentFilter === 'vol15') return shop.marche_history.includes(15);
+    if (currentFilter === 'vol14') return shop.marche_history.includes(14);
+    return shop.category === currentFilter;
+  }
+
+  function renderShops() {
+    const grid = document.getElementById('shopGrid');
+    const noResult = document.getElementById('noResult');
+    const filtered = allShops.filter(matchesFilter);
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      noResult.style.display = '';
+      return;
+    }
+    noResult.style.display = 'none';
+
+    grid.innerHTML = filtered.map(shop => {
+      const marcheHist = shop.marche_history.map(v =>
+        `<span class="marche-tag">第${v}回</span>`
+      ).join('');
+
+      const igBtn = shop.ig
+        ? `<a href="${shop.ig}" target="_blank" rel="noopener" class="btn-ig">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            @${shop.ig_id}
+           </a>`
+        : '';
+
+      const ig2Btn = shop.ig2
+        ? `<a href="${shop.ig2}" target="_blank" rel="noopener" class="btn-ig2">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            公式
+           </a>`
+        : '';
+
+      const onlineBtn = shop.online
+        ? `<a href="${shop.online}" target="_blank" rel="noopener" class="btn-online">🛒 ショップ</a>`
+        : '';
+
+      return `
+        <div class="shop-card" data-category="${shop.category}" data-marche="${shop.marche_history.join(',')}">
+          <div class="card-top">
+            <img class="card-icon"
+              src="../${shop.icon}"
+              alt="${shop.name}"
+              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2232%22 fill=%22%23e8f0fe%22/%3E%3Ctext x=%2232%22 y=%2240%22 text-anchor=%22middle%22 font-size=%2228%22%3E🐧%3C/text%3E%3C/svg%3E'">
+            <div class="card-title-wrap">
+              <div class="card-name" title="${shop.name}">${shop.name}</div>
+              <div class="card-category">${CATEGORY_LABEL[shop.category] || shop.category}</div>
+              <div class="marche-tags">${marcheHist}</div>
+            </div>
+          </div>
+          <div class="card-desc">${shop.desc.replace(/\n/g, '<br>')}</div>
+          <div class="card-actions">
+            ${igBtn}${ig2Btn}${onlineBtn}
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderShops();
+    });
+  });
+
+  loadShops();
+</script>
+</body>
+</html>
