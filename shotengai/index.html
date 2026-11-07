@@ -416,7 +416,7 @@
 
   async function loadShops() {
     try {
-      const res = await fetch('../data/shops.json');
+      const res = await fetch('../data/shops.json?v=20261107');
       const data = await res.json();
       allShops = data.shops;
       renderShops();
